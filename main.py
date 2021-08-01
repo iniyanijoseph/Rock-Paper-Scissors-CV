@@ -42,6 +42,8 @@ def create_model(a, b):
 	m = Sequential([
 		layers.experimental.preprocessing.Resizing(128, 128),
 		layers.experimental.preprocessing.Rescaling(1./255, input_shape=(128, 128, 3)),
+		layers.experimental.preprocessing.RandomFlip("horizontal_and_vertical"),
+		layers.experimental.preprocessing.RandomRotation(0.2),
 		layers.Conv2D(32, 3, padding='same', activation='relu'),
 		layers.AveragePooling2D(),
 		layers.Conv2D(16, 3, padding='same', activation='relu'),
@@ -52,7 +54,7 @@ def create_model(a, b):
 		layers.AveragePooling2D(),
 		layers.Flatten(),
 		layers.Dense(128, activation='relu'),
-		layers.Dense(64, activation='tanh'),
+		layers.Dense(64, activation='relu'),
 		layers.Dense(3, activation="softmax")
 	])
 	m.compile(
